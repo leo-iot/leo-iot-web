@@ -9,7 +9,6 @@ import {
 } from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {MqttInterface} from '../mqttInterface';
-import {delay} from 'rxjs/operators';
 import {RoomDataHolder} from '../modelmenu/roomDataHolder';
 import {getColorOfRoomForFilter} from '../helperFunctions';
 import {InActiveWatcher} from '../InActiveWatcher';
@@ -139,9 +138,13 @@ export class ModelController {
     this.startMqttWatching();
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async move(direction, obj) {
     this.mov = this.objectArr.find(x => x.name === obj);
-    await delay(100);
+    await this.delay(100);
     if (direction === 'up') {
       this.mov.translateY(50);
     } else if (direction === 'down') {
