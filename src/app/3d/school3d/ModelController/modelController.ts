@@ -138,12 +138,21 @@ export class ModelController {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async move(direction, obj) {
+  moveSingleObject(direction, obj) {
     this.mov = this.objectArr.find(x => x.name === obj);
     if (direction === 'up') {
       this.mov.translateY(25);
     } else if (direction === 'down') {
       this.mov.translateY(-25);
+    }
+  }
+
+  async moveMultipleObjects(direction, objs) {
+    for (let j = 0; j <= 180; j++) {
+      await this.delay(10);
+      objs.forEach(((obj) => {
+        this.moveSingleObject(direction, obj);
+      }));
     }
   }
 
@@ -169,14 +178,14 @@ export class ModelController {
     }
 
     if (this.objectsUp.includes(this.movingIndex) && this.FLOORS.includes(floorname)) {
-      for (let j = 0; j <= 180; j++) {
-        await this.delay(10);
-        for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
-          if (this.objectsUp.includes(i)) {
-            await this.move('down', this.FLOORS[i]);
-          }
+      const objs = [];
+      for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
+        if (this.objectsUp.includes(i)) {
+          objs.push(this.FLOORS[i]);
         }
       }
+      await this.moveMultipleObjects('down', objs);
+
       // enabled rooms
       for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
         let enabledRoom = [];
@@ -238,14 +247,13 @@ export class ModelController {
           objectDisable.visible = false;
         }
       }
-      for (let j = 0; j <= 180; j++) {
-        await this.delay(10);
-        for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
-          if (!this.objectsUp.includes(k)) {
-            await this.move('up', this.FLOORS[k]);
-          }
+      const objs = [];
+      for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
+        if (!this.objectsUp.includes(k)) {
+          objs.push(this.FLOORS[k]);
         }
       }
+      await this.moveMultipleObjects('up', objs);
 
       for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
         this.objectArr.find(x => x.name === this.FLOORS[i]).visible = false;
