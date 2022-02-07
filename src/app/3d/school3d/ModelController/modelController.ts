@@ -50,10 +50,6 @@ export class ModelController {
   title = 'clientAngular';
 
 
-  static async stuff() {
-    console.log('stuff');
-  }
-
   getFloorOfRoom(floorName: string) {
     switch (floorName[0]) {
       case 'U':
