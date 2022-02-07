@@ -173,6 +173,22 @@ export class ModelController {
     }
   }
 
+  setRoomsVisibility(start, end, visible) {
+    for (let i = start; i <= end; i++) {
+      let rooms = [];
+
+      const helpChar = this.getHelpChar(i);
+
+      rooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
+        && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
+
+      for (const room of rooms) {
+        const objectEnable = this.objectArr.find(x => x.name === room.name);
+        objectEnable.visible = visible;
+      }
+    }
+  }
+
   async floorSelect(floorname) {
 
     const floorIndex = this.FLOORS.indexOf(floorname);
@@ -199,19 +215,7 @@ export class ModelController {
       await this.moveMultipleObjects('down', objs);
 
       // enabled rooms
-      for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
-        let enabledRoom = [];
-
-        const helpChar = this.getHelpChar(i);
-
-        enabledRoom = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
-          && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
-
-        for (const eRoom of enabledRoom) {
-          const objectEnable = this.objectArr.find(x => x.name === eRoom.name);
-          objectEnable.visible = true;
-        }
-      }
+      this.setRoomsVisibility(this.objectsUp[0], this.movingIndex, true);
 
       for (let i = 0; i <= this.movingIndex; i++) {
         this.objectsUp.splice(this.objectsUp.indexOf(this.movingIndex), 1);
@@ -219,18 +223,8 @@ export class ModelController {
 
     } else if (this.FLOORS.includes(floorname)) {   // move up
       // disabled rooms
-      let disabledRooms = [];
+      this.setRoomsVisibility(this.movingIndex + 1, this.FLOORS.length - 1, false);
 
-      for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-        const helpChar = this.getHelpChar(i);
-        disabledRooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
-          && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
-
-        for (const dRoom of disabledRooms) {
-          const objectDisable = this.objectArr.find(x => x.name === dRoom.name);
-          objectDisable.visible = false;
-        }
-      }
       const objs = [];
       for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
         if (!this.objectsUp.includes(k)) {
