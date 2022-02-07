@@ -145,9 +145,9 @@ export class ModelController {
   async move(direction, obj) {
     this.mov = this.objectArr.find(x => x.name === obj);
     if (direction === 'up') {
-      this.mov.translateY(50);
+      this.mov.translateY(25);
     } else if (direction === 'down') {
-      this.mov.translateY(-50);
+      this.mov.translateY(-25);
     }
   }
 
@@ -173,8 +173,8 @@ export class ModelController {
     }
 
     if (this.objectsUp.includes(this.movingIndex) && this.FLOORS.includes(floorname)) {
-      for (let j = 0; j <= 50; j++) {
-        await this.delay(100);
+      for (let j = 0; j <= 180; j++) {
+        await this.delay(10);
         for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
           if (this.objectsUp.includes(i)) {
             await this.move('down', this.FLOORS[i]);
@@ -242,8 +242,8 @@ export class ModelController {
           objectDisable.visible = false;
         }
       }
-      for (let j = 0; j <= 50; j++) {
-        await this.delay(100);
+      for (let j = 0; j <= 180; j++) {
+        await this.delay(10);
         for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
           if (!this.objectsUp.includes(k)) {
             await this.move('up', this.FLOORS[k]);
