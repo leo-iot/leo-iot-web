@@ -160,6 +160,18 @@ export class ModelController {
     await ModelController.instance.floorSelect(floorName);
   }
 
+  getHelpChar(num) {
+    switch (this.FLOORS[num].toString()) {
+      case this.FLOORS[0]:
+        return 'U';
+      case this.FLOORS[1]:
+        return 'E';
+      case this.FLOORS[2]:
+        return '1';
+      case this.FLOORS[3]:
+        return '2';
+    }
+  }
 
   async floorSelect(floorname) {
 
@@ -190,21 +202,7 @@ export class ModelController {
       for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
         let enabledRoom = [];
 
-        let helpChar;
-        switch (this.FLOORS[i].toString()) {
-          case this.FLOORS[0]:
-            helpChar = 'U';
-            break;
-          case this.FLOORS[1]:
-            helpChar = 'E';
-            break;
-          case this.FLOORS[2]:
-            helpChar = '1';
-            break;
-          case this.FLOORS[3]:
-            helpChar = '2';
-            break;
-        }
+        const helpChar = this.getHelpChar(i);
 
         enabledRoom = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
           && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
@@ -224,21 +222,7 @@ export class ModelController {
       let disabledRooms = [];
 
       for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-        let helpChar;
-        switch (this.FLOORS[i].toString()) {
-          case this.FLOORS[0]:
-            helpChar = 'U';
-            break;
-          case this.FLOORS[1]:
-            helpChar = 'E';
-            break;
-          case this.FLOORS[2]:
-            helpChar = '1';
-            break;
-          case this.FLOORS[3]:
-            helpChar = '2';
-            break;
-        }
+        const helpChar = this.getHelpChar(i);
         disabledRooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
           && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
 
