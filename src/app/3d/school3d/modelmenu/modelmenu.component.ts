@@ -102,9 +102,5 @@ export class ModelmenuComponent {
   filterNotificationActive() {
     return this.getCurrentFilter() !== 'basic';
   }
-
-  testingStuff() {
-    ModelController.stuff();
-  }
 }
 
