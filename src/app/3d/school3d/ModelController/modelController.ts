@@ -188,6 +188,13 @@ export class ModelController {
     await ModelController.instance.floorSelect(floorName);
   }
 
+  /**
+   * Select the floor from the floorname
+   * and move the floors above up or down
+   * with a moving animation ( method moveMultipleObjects)
+   *
+   * @param floorname
+   */
   async floorSelect(floorname) {
 
     const floorIndex = this.FLOORS.indexOf(floorname);
