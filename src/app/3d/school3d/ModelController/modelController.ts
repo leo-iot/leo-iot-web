@@ -9,7 +9,6 @@ import {
 } from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {MqttInterface} from '../mqttInterface';
-import {delay} from 'rxjs/operators';
 import {RoomDataHolder} from '../modelmenu/roomDataHolder';
 import {getColorOfRoomForFilter} from '../helperFunctions';
 import {InActiveWatcher} from '../InActiveWatcher';
@@ -72,8 +71,8 @@ export class ModelController {
   }
 
   transformPoints(event) {
-    let w = ModelController.renderer.domElement.width;
-    let h = ModelController.renderer.domElement.height;
+    let w = window.innerWidth;
+    let h = window.innerHeight;
 
     if (event.pointerType === 'touch' || w >= 3840) {
       w /= 2;
@@ -139,13 +138,16 @@ export class ModelController {
     this.startMqttWatching();
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   async move(direction, obj) {
     this.mov = this.objectArr.find(x => x.name === obj);
-    await delay(100);
     if (direction === 'up') {
-      this.mov.translateY(50);
+      this.mov.translateY(25);
     } else if (direction === 'down') {
-      this.mov.translateY(-50);
+      this.mov.translateY(-25);
     }
   }
 
@@ -171,7 +173,8 @@ export class ModelController {
     }
 
     if (this.objectsUp.includes(this.movingIndex) && this.FLOORS.includes(floorname)) {
-      for (let j = 0; j <= 50; j++) {
+      for (let j = 0; j <= 180; j++) {
+        await this.delay(10);
         for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
           if (this.objectsUp.includes(i)) {
             await this.move('down', this.FLOORS[i]);
@@ -239,7 +242,8 @@ export class ModelController {
           objectDisable.visible = false;
         }
       }
-      for (let j = 0; j <= 50; j++) {
+      for (let j = 0; j <= 180; j++) {
+        await this.delay(10);
         for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
           if (!this.objectsUp.includes(k)) {
             await this.move('up', this.FLOORS[k]);
