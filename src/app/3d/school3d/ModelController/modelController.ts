@@ -62,7 +62,6 @@ export class ModelController {
         return this.FLOORS[3];
       default:
         return '';
-        break;
     }
   }
 
@@ -156,10 +155,6 @@ export class ModelController {
     }
   }
 
-  async floorSelectCallback(floorName) {
-    await ModelController.instance.floorSelect(floorName);
-  }
-
   getHelpChar(num) {
     switch (this.FLOORS[num].toString()) {
       case this.FLOORS[0]:
@@ -187,6 +182,10 @@ export class ModelController {
         objectEnable.visible = visible;
       }
     }
+  }
+
+  async floorSelectCallback(floorName) {
+    await ModelController.instance.floorSelect(floorName);
   }
 
   async floorSelect(floorname) {
