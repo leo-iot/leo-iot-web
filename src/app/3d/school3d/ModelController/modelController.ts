@@ -173,8 +173,8 @@ export class ModelController {
     }
   }
 
-  setRoomsVisibility(start, end, visible) {
-    for (let i = start; i <= end; i++) {
+  setRoomsVisibility(startFloor, endFloor, visible) {
+    for (let i = startFloor; i <= endFloor; i++) {
       let rooms = [];
 
       const helpChar = this.getHelpChar(i);
