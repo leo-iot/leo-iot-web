@@ -1,5 +1,13 @@
 <div *ngIf="modelIsLoading()" id="loadingScreen">
-  <div id="loadingText">Loading the Model</div>
+
+
+  <video autoplay loop muted oncanplay="this.play()" onloadedmetadata="this.muted = true" id="loadingImage">
+    <source src="/assets/images/leoiot-loading/leoiot-loading.webm" type="video/webm" />
+    Your browser does not support the video tag.
+  </video>
+  <div id="loadingText">
+    Loading the Model
+  </div>
 </div>
 
 <img *ngIf="legendActive()" [src]="getCurrentLegend()" class="legendImage">
