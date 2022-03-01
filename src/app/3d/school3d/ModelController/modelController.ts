@@ -223,10 +223,6 @@ export class ModelController {
       // enabled rooms
       this.setRoomsVisibility(this.objectsUp[0], this.movingIndex, true);
 
-      // for (let i = 0; i <= this.movingIndex; i++) {
-      //   this.objectsUp.splice(this.objectsUp.indexOf(this.movingIndex), 1);
-      // }
-
     } else if (this.FLOORS.includes(floorname)) {   // move up
       // disabled rooms
       this.setRoomsVisibility(this.movingIndex + 1, this.FLOORS.length - 1, false);
