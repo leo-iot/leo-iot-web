@@ -241,7 +241,7 @@ export class ModelController {
     }
 
     this.objectsUp = [];
-    for (let i = this.movingIndex + 1; i <= 4; i++){
+    for (let i = this.movingIndex + 1; i <= this.FLOORS.length - 1; i++) {
       this.objectsUp.push(i);
     }
     this.objectsUp.sort();
