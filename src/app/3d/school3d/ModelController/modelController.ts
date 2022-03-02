@@ -50,10 +50,6 @@ export class ModelController {
   title = 'clientAngular';
 
 
-  static async stuff() {
-    console.log('stuff');
-  }
-
   getFloorOfRoom(floorName: string) {
     switch (floorName[0]) {
       case 'U':
@@ -66,7 +62,6 @@ export class ModelController {
         return this.FLOORS[3];
       default:
         return '';
-        break;
     }
   }
 
@@ -142,7 +137,7 @@ export class ModelController {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async move(direction, obj) {
+  moveSingleObject(direction, obj) {
     this.mov = this.objectArr.find(x => x.name === obj);
     if (direction === 'up') {
       this.mov.translateY(25);
@@ -151,11 +146,55 @@ export class ModelController {
     }
   }
 
+  async moveMultipleObjects(direction, objs) {
+    for (let j = 0; j <= 180; j++) {
+      await this.delay(10);
+      objs.forEach(((obj) => {
+        this.moveSingleObject(direction, obj);
+      }));
+    }
+  }
+
+  getHelpChar(num) {
+    switch (this.FLOORS[num].toString()) {
+      case this.FLOORS[0]:
+        return 'U';
+      case this.FLOORS[1]:
+        return 'E';
+      case this.FLOORS[2]:
+        return '1';
+      case this.FLOORS[3]:
+        return '2';
+    }
+  }
+
+  setRoomsVisibility(startFloor, endFloor, visible) {
+    for (let i = startFloor; i <= endFloor; i++) {
+      let rooms = [];
+
+      const helpChar = this.getHelpChar(i);
+
+      rooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
+        && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
+
+      for (const room of rooms) {
+        const objectEnable = this.objectArr.find(x => x.name === room.name);
+        objectEnable.visible = visible;
+      }
+    }
+  }
+
   async floorSelectCallback(floorName) {
     await ModelController.instance.floorSelect(floorName);
   }
 
-
+  /**
+   * Select the floor from the floorname
+   * and move the floors above up or down
+   * with a moving animation ( method moveMultipleObjects)
+   *
+   * @param floorname
+   */
   async floorSelect(floorname) {
 
     const floorIndex = this.FLOORS.indexOf(floorname);
@@ -173,93 +212,37 @@ export class ModelController {
     }
 
     if (this.objectsUp.includes(this.movingIndex) && this.FLOORS.includes(floorname)) {
-      for (let j = 0; j <= 180; j++) {
-        await this.delay(10);
-        for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
-          if (this.objectsUp.includes(i)) {
-            await this.move('down', this.FLOORS[i]);
-          }
-        }
-      }
-      // enabled rooms
+      const objs = [];
       for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
-        let enabledRoom = [];
-
-        let helpChar;
-        switch (this.FLOORS[i].toString()) {
-          case this.FLOORS[0]:
-            helpChar = 'U';
-            break;
-          case this.FLOORS[1]:
-            helpChar = 'E';
-            break;
-          case this.FLOORS[2]:
-            helpChar = '1';
-            break;
-          case this.FLOORS[3]:
-            helpChar = '2';
-            break;
-        }
-
-        enabledRoom = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
-          && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
-
-        for (const eRoom of enabledRoom) {
-          const objectEnable = this.objectArr.find(x => x.name === eRoom.name);
-          objectEnable.visible = true;
+        if (this.objectsUp.includes(i)) {
+          objs.push(this.FLOORS[i]);
         }
       }
+      await this.moveMultipleObjects('down', objs);
 
-      for (let i = 0; i <= this.movingIndex; i++) {
-        this.objectsUp.splice(this.objectsUp.indexOf(this.movingIndex), 1);
-      }
+      // enabled rooms
+      this.setRoomsVisibility(this.objectsUp[0], this.movingIndex, true);
 
     } else if (this.FLOORS.includes(floorname)) {   // move up
       // disabled rooms
-      let disabledRooms = [];
+      this.setRoomsVisibility(this.movingIndex + 1, this.FLOORS.length - 1, false);
 
-      for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-        let helpChar;
-        switch (this.FLOORS[i].toString()) {
-          case this.FLOORS[0]:
-            helpChar = 'U';
-            break;
-          case this.FLOORS[1]:
-            helpChar = 'E';
-            break;
-          case this.FLOORS[2]:
-            helpChar = '1';
-            break;
-          case this.FLOORS[3]:
-            helpChar = '2';
-            break;
-        }
-        disabledRooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
-          && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
-
-        for (const dRoom of disabledRooms) {
-          const objectDisable = this.objectArr.find(x => x.name === dRoom.name);
-          objectDisable.visible = false;
+      const objs = [];
+      for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
+        if (!this.objectsUp.includes(k)) {
+          objs.push(this.FLOORS[k]);
         }
       }
-      for (let j = 0; j <= 180; j++) {
-        await this.delay(10);
-        for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
-          if (!this.objectsUp.includes(k)) {
-            await this.move('up', this.FLOORS[k]);
-          }
-        }
-      }
+      await this.moveMultipleObjects('up', objs);
 
       for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
         this.objectArr.find(x => x.name === this.FLOORS[i]).visible = false;
       }
     }
 
-    for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-      if (!this.objectsUp.includes(i)) {
-        this.objectsUp.push(i);
-      }
+    this.objectsUp = [];
+    for (let i = this.movingIndex + 1; i <= this.FLOORS.length - 1; i++) {
+      this.objectsUp.push(i);
     }
     this.objectsUp.sort();
 
