@@ -223,10 +223,6 @@ export class ModelController {
       // enabled rooms
       this.setRoomsVisibility(this.objectsUp[0], this.movingIndex, true);
 
-      for (let i = 0; i <= this.movingIndex; i++) {
-        this.objectsUp.splice(this.objectsUp.indexOf(this.movingIndex), 1);
-      }
-
     } else if (this.FLOORS.includes(floorname)) {   // move up
       // disabled rooms
       this.setRoomsVisibility(this.movingIndex + 1, this.FLOORS.length - 1, false);
@@ -244,10 +240,9 @@ export class ModelController {
       }
     }
 
-    for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-      if (!this.objectsUp.includes(i)) {
-        this.objectsUp.push(i);
-      }
+    this.objectsUp = [];
+    for (let i = this.movingIndex + 1; i <= this.FLOORS.length - 1; i++) {
+      this.objectsUp.push(i);
     }
     this.objectsUp.sort();
 
