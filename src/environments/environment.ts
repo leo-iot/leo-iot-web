@@ -3,13 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  vmUrl: 'https://vm103.htl-leonding.ac.at',
-  mqttUrl: 'vm103.htl-leonding.ac.at',
-  corePathPrefix: '/core',
+  production: true,
+  vmUrl: 'https://vm139.htl-leonding.ac.at',
+  mqttUrl: 'vm90.htl-leonding.ac.at',
+  corePathPrefix: '',
   mqttPathPrefix: '/broker',
   mqttPath: '/mqtt',
-  mqttPort: 443
+  mqttPort: 9001,
+  vmPort: 8080
 };
 
 /*
