@@ -69,7 +69,7 @@ export class LiveMeasurementService {
    */
   observeTemperature(area: Area, section: Section, position: string): Observable<Measurement> {
     return new Observable<Measurement>(observer => {
-      this.observe(`htlleonding/${area.name}/${section.name}/${position}/temperature`).subscribe((message: IMqttMessage) => {
+      this.observe(`${area.name}/${section.name}/temperature/state`).subscribe((message: IMqttMessage) => {
         const json = JSON.parse(message.payload.toString());
         const m: Measurement = new Measurement();
         m.value = json.value;
@@ -216,7 +216,6 @@ export class LiveMeasurementService {
   }
 
   observeSensor(area: Area, section: Section, position: string, sensor: string): Observable<Measurement> {
-    console.log(`htlleonding/${area.name}/${section.name}/${position}/${sensor}/#`);
     let munit;
     switch (sensor) {
       case 'co2':
@@ -251,7 +250,7 @@ export class LiveMeasurementService {
     }
 
     return new Observable<Measurement>(observer => {
-      this.observe(`htlleonding/${area.name}/${section.name}/${position}/${sensor}/#`)
+      this.observe(`${area.name}/${section.name}/${sensor}/state`)
       .subscribe((message: IMqttMessage) => {
         const json = JSON.parse(message.payload.toString());
         const m: Measurement = new Measurement();

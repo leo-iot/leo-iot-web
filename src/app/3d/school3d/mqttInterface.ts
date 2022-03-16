@@ -8,7 +8,7 @@ import {MeasurementTypeAndValue} from '../../modules/dashboard/components';
 import {ModelAction} from './ModelController/ModelAction';
 
 export class MqttInterface {
-  static floorsMqtt = ['basement', 'firstfloor', 'secondfloor', 'thirdfloor'];
+  static floorsMqtt = ['ug', 'eg', 'og', 'thirdfloor'];
 
   constructor(private mqttService: MqttService,
               private measurementService: HistoricalMeasurementService,
@@ -35,25 +35,16 @@ export class MqttInterface {
 
     const s = new Section();
     s.name = selectedRoom.toLowerCase();
-
     if (!a || !s) {
       return of(new Array<MeasurementTypeAndValue>()).toPromise();
     }
 
-    const sectionWithSensors = await this.measurementService.getSensorsOfSection(a.name, s.name).toPromise();
-    const positions = [];
-    positions.push(sectionWithSensors.sensors[0].position);
-    await sectionWithSensors.sensors.forEach(sensor => {
-      if (positions.includes(!sensor.position)) {
-        positions.push(sensor.position);
-      }
-    });
-
+    s.sensors = [{name: 'temperature'}, {name: 'humidity'}, {name: 'noise'}, {name: 'pressure'}, {name: 'luminosity'}, {name: 'co2'} ];
     const sensorTypeAndMeasurementsArray = [];
 
-    return of(sectionWithSensors.sensors.map(async sensor => {
+    return of(s.sensors.map(async sensor => {
       try {
-        const measurement = (await this.liveService.observeSensor(a, s, positions[0], sensor.name));
+        const measurement = (await this.liveService.observeSensor(a, s, '', sensor.name));
         if (measurement === null) {
           return new Array<MeasurementTypeAndValue>();
         }
