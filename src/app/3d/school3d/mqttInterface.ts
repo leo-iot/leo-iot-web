@@ -2,17 +2,19 @@ import {MqttService} from 'ngx-mqtt';
 import {HistoricalMeasurementService} from '../../core/services/historical-measurements.service';
 import {Observable, of} from 'rxjs';
 import {LiveMeasurementService} from '../../core/services/live-measurements.service';
-import {Area, Section} from '../../shared/models';
+import {Area, MeasurementType, Section} from '../../shared/models';
 import {ModelController} from './ModelController/modelController';
 import {MeasurementTypeAndValue} from '../../modules/dashboard/components';
 import {ModelAction} from './ModelController/ModelAction';
+import {SensortypeService} from '../../core/services/sensortype.service';
 
 export class MqttInterface {
-  static floorsMqtt = ['ug', 'eg', 'og', 'thirdfloor'];
+  static floorsMqtt = ['ug', 'eg', 'og', 'og2'];
 
   constructor(private mqttService: MqttService,
               private measurementService: HistoricalMeasurementService,
-              private liveService: LiveMeasurementService) {
+              private liveService: LiveMeasurementService,
+              private sensortypeService: SensortypeService) {
   }
 
 
@@ -39,7 +41,13 @@ export class MqttInterface {
       return of(new Array<MeasurementTypeAndValue>()).toPromise();
     }
 
-    s.sensors = [{name: 'temperature'}, {name: 'humidity'}, {name: 'noise'}, {name: 'pressure'}, {name: 'luminosity'}, {name: 'co2'} ];
+    const measurementTypes: MeasurementType[] = [];
+    const sensors = await this.sensortypeService.getSensortypes();
+    sensors.forEach(sensor => {
+      measurementTypes.push({name: sensor.name});
+    });
+    s.sensors = measurementTypes;
+
     const sensorTypeAndMeasurementsArray = [];
 
     return of(s.sensors.map(async sensor => {
