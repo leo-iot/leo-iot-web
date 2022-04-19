@@ -106,19 +106,20 @@
           <div id="roomName" class="itemName">{{getCurrentRoom()}}</div>
         </td>
       </tr>
-
-      <tr *ngFor="let measurementTypeAndValue of getData()">
-        <td>
-          <div class="itemName">
-            {{measurementTypeAndValue.type | titlecase}}
-          </div>
-        </td>
-        <td>
-          <div class="itemName">
-            {{(measurementTypeAndValue?.measurement | async)?.value }} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
-          </div>
-        </td>
-      </tr>
+      <ng-container *ngFor="let measurementTypeAndValue of getData()">
+        <tr *ngIf="(measurementTypeAndValue?.measurement | async)?.value != undefined">
+          <td>
+            <div class="itemName">
+              {{measurementTypeAndValue.type | titlecase}}
+            </div>
+          </td>
+          <td>
+            <div class="itemName">
+              {{(measurementTypeAndValue?.measurement | async)?.value }} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
+            </div>
+          </td>
+        </tr>
+      </ng-container>
     </table>
 
     <app-video-feed *ngIf="hasWebcam()"
