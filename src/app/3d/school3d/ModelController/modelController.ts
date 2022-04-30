@@ -94,7 +94,7 @@ export class ModelController {
   }
 
   inactiveCallback() {
-    ModelController.instance.inactiveEvent();
+    // ModelController.instance.inactiveEvent();
   }
 
   inactiveEvent() {
@@ -391,6 +391,7 @@ export class ModelController {
       try {
         measurementTypeAndValues = await this.mqttInterface.getMeasurementTypesOfRoom(roomName, floorName);
       } catch (e) {
+        return;
       }
       const room = new RoomDataHolder(roomName, measurementTypeAndValues);
       await this.checkRoomForWebcam(room);

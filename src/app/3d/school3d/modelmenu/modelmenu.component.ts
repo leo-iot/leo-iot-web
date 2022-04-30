@@ -3,6 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ModelController} from '../ModelController/modelController';
 import {MeasurementTypeAndValue} from '../../../modules/dashboard/components';
 import {RoomDataHolder} from './roomDataHolder';
+import {interval, Subscription} from 'rxjs';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ModelmenuComponent {
   @Input() selectedFloor: string;
   @Input() applyFilter;
   @Input() floorSelect;
+  private curFilterSubs: Subscription;
 
 
   constructor() {
@@ -84,7 +86,15 @@ export class ModelmenuComponent {
     ModelmenuComponent.currentFilter = ModelmenuComponent.currentFilter === key ? 'basic' : key;
 
     const filter = ModelmenuComponent.currentFilter;
-    this.applyFilter(filter);
+    if (this.curFilterSubs !== undefined) {
+      this.curFilterSubs.unsubscribe();
+    }
+    if (filter === key) {
+      this.applyFilter(filter);
+      this.curFilterSubs = interval(1000).subscribe((x => {
+        this.applyFilter(filter);
+      }));
+    }
   }
 
   buttonBackgroundColor(filter: string) {

@@ -24,11 +24,13 @@ export class SensortypeService {
   }
 
   async getSensortypes() {
-    await this.getSensortypesFromBackend().toPromise().then((data) => {
-      this.sensortypes = data;
-    }).catch((err) => {
-      this.sensortypes = this.defaultSensortypes;
-    });
+    if (this.sensortypes.length === 0) {
+      await this.getSensortypesFromBackend().toPromise().then((data) => {
+        this.sensortypes = data;
+      }).catch((err) => {
+        this.sensortypes = this.defaultSensortypes;
+      });
+    }
     return this.sensortypes;
   }
 
