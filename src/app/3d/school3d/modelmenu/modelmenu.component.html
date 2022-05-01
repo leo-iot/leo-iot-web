@@ -115,7 +115,7 @@
           </td>
           <td>
             <div class="itemName">
-              {{(measurementTypeAndValue?.measurement | async)?.value }} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
+              {{(measurementTypeAndValue?.measurement | async)?.value | number : '.2-2'}} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
             </div>
           </td>
         </tr>
