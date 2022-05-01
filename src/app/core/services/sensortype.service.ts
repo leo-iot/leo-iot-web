@@ -17,7 +17,8 @@ export class SensortypeService {
     {'name' : 'co2', unit: 'PPM'},
     {'name' : 'humidity', unit: '%'},
     {'name' : 'luminosity', unit: 'LUX'},
-    {'name' : 'noise', unit: ''}
+    // {'name' : 'noise', unit: ''},
+    {'name' : 'volume', unit: 'dB'}
   ];
 
   constructor(private http: HttpClient) {
