@@ -361,9 +361,9 @@ export class ModelController {
   }
 
   async applyFilter(curFilter) {
-    if (this.observedRoom.size === 0) {
-      await this.observeAllRooms();
-    }
+    // if (this.observedRoom.size === 0) {
+    await this.observeAllRooms();
+    // }
     this.filter = curFilter;
     for (const obj of this.roomObject
       .filter(value => !this.observedRoom.has(value))) {
@@ -404,7 +404,7 @@ export class ModelController {
   }
 
   async sendRoom(roomName) {
-    if (this.lastSelectedObject !== undefined) {
+    if (this.lastSelectedObject !== undefined && this.lastSelectedObject.material.color.getHex() === SELECTED_COLOR_HEX) {
       this.lastSelectedObject.material.color.setHex(BASE_COLOR_HEX);
       // await this.instance.setRoomColor(roomName);
 
