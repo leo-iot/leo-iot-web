@@ -88,6 +88,7 @@ export class ModelmenuComponent {
     const filter = ModelmenuComponent.currentFilter;
     if (this.curFilterSubs !== undefined) {
       this.curFilterSubs.unsubscribe();
+      this.applyFilter('white');
     }
     if (filter === key) {
       this.applyFilter(filter);
