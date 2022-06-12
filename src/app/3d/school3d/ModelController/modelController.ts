@@ -66,13 +66,8 @@ export class ModelController {
   }
 
   transformPoints(event) {
-    let w = window.innerWidth;
-    let h = window.innerHeight;
-
-    if (event.pointerType === 'touch' || w >= 3840) {
-      w /= 2;
-      h /= 2;
-    }
+    const w = window.innerWidth;
+    const h = window.innerHeight;
 
     const x = (event.x / w) * 2;
     const y = -(event.y / h) * 2;
