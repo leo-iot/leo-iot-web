@@ -13,24 +13,26 @@ function getColorOfRoomForFilter(value: number, curFilter: string) {
       return new Color(tmp, tmp, 1);
       break;
     case 'co2':
-      if (value > 500) {
-        return new Color(1, 1, 0);
-        if (value > 800) {
-          return new Color(1, 0, 0);
-        }
+      if (value < 500) {
+        return new Color(0, 1, 0);
+      } else if (value > 800) {
+        return new Color(1, 0, 0);
+      } else {
+        percent = (value - 500.0) / 300.0;
+        return new Color(percent, 1 - percent, 0);
       }
-      return new Color(0, 1, 0);
       break;
     case 'light':
       return new Color(1, 1, value < 50 ? 1 : 0);
     case 'volume':
-      if (value > 50) {
-        if (value > 100) {
-          return new Color(1, 0, 0);
-        }
-        return new Color(1, 1, 0);
+      if (value < 50) {
+        return new Color(0, 1, 0);
+      } else if (value > 100) {
+        return new Color(1, 0, 0);
+      } else {
+        percent = (value - 50.0) / 50.0;
+        return new Color(percent, 1 - percent, 0);
       }
-      return new Color(0, 1, 0);
       break;
     default:
       console.error('no color fro filter: ', curFilter);

@@ -80,13 +80,13 @@
             CO2
           </button>
           <br>
-          <div class="placeholder"></div>
+          <!--<div class="placeholder"></div>
           <button type="button" id="lightFilter" class="bigButton"
                   [style.backgroundColor]="buttonBackgroundColor('light')"
                   [style.color]="buttonColor('light')"
                   (click)="clickEvent('light')">
             Licht
-          </button>
+          </button>-->
           <br>
           <div class="placeholder"></div>
           <button type="button" id="volume" class="bigButton"
@@ -106,19 +106,20 @@
           <div id="roomName" class="itemName">{{getCurrentRoom()}}</div>
         </td>
       </tr>
-
-      <tr *ngFor="let measurementTypeAndValue of getData()">
-        <td>
-          <div class="itemName">
-            {{measurementTypeAndValue.type | titlecase}}
-          </div>
-        </td>
-        <td>
-          <div class="itemName">
-            {{(measurementTypeAndValue?.measurement | async)?.value }} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
-          </div>
-        </td>
-      </tr>
+      <ng-container *ngFor="let measurementTypeAndValue of getData()">
+        <tr *ngIf="(measurementTypeAndValue?.measurement | async)?.value != undefined">
+          <td>
+            <div class="itemName">
+              {{measurementTypeAndValue.type | titlecase}}
+            </div>
+          </td>
+          <td>
+            <div class="itemName">
+              {{(measurementTypeAndValue?.measurement | async)?.value | number : '.2-2'}} {{ (measurementTypeAndValue?.measurement | async)?.unit}}
+            </div>
+          </td>
+        </tr>
+      </ng-container>
     </table>
 
     <app-video-feed *ngIf="hasWebcam()"

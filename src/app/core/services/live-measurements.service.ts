@@ -5,6 +5,7 @@ import {Area, Section, Measurement} from 'src/app/shared/models';
 import {MeasurementTypeAndValue} from '../../modules/dashboard/components';
 import {ParseArgumentException} from '@angular/cli/models/parser';
 import {ModelAction} from '../../3d/school3d/ModelController/ModelAction';
+import {SensortypeService} from './sensortype.service';
 
 @Injectable()
 export class LiveMeasurementService {
@@ -19,9 +20,10 @@ export class LiveMeasurementService {
   /**
    * Creates an instance of LiveMeasurementService.
    * @param {MqttService} mqttService
+   * @param {SensortypeService} sensorType
    * @memberof LiveMeasurementService
    */
-  constructor(private mqttService: MqttService) {
+  constructor(private mqttService: MqttService, private sensorType: SensortypeService) {
   }
 
   /**
@@ -69,7 +71,7 @@ export class LiveMeasurementService {
    */
   observeTemperature(area: Area, section: Section, position: string): Observable<Measurement> {
     return new Observable<Measurement>(observer => {
-      this.observe(`htlleonding/${area.name}/${section.name}/${position}/temperature`).subscribe((message: IMqttMessage) => {
+      this.observe(`${area.name}/${section.name}/temperature/state`).subscribe((message: IMqttMessage) => {
         const json = JSON.parse(message.payload.toString());
         const m: Measurement = new Measurement();
         m.value = json.value;
@@ -216,42 +218,15 @@ export class LiveMeasurementService {
   }
 
   observeSensor(area: Area, section: Section, position: string, sensor: string): Observable<Measurement> {
-    console.log(`htlleonding/${area.name}/${section.name}/${position}/${sensor}/#`);
     let munit;
-    switch (sensor) {
-      case 'co2':
-        munit = 'PPM';
-        break;
-      case 'light':
-        munit = 'LUX';
-        break;
-      case 'humidity':
-        munit = '%';
-        break;
-      case 'noise':
-        munit = '';
-        break;
-      case 'db':
-        munit = 'DB';
-        break;
-      case 'temperature':
-        munit = '°C';
-        break;
-      case 'webcam':
-        munit = 'IP';
-        break;
-      case 'window':
-        munit = '';
-        break;
-      case 'luminosity':
-        munit = 'LUX';
-        break;
-      default:
-        throw new TypeError('failed to parse argument');
-    }
+    this.sensorType.sensortypes.forEach(sensorType => {
+      if (sensor === sensorType.name) {
+        munit = sensorType.unit;
+      }
+    });
 
     return new Observable<Measurement>(observer => {
-      this.observe(`htlleonding/${area.name}/${section.name}/${position}/${sensor}/#`)
+      this.observe(`${area.name}/${section.name}/${sensor}/state`)
       .subscribe((message: IMqttMessage) => {
         const json = JSON.parse(message.payload.toString());
         const m: Measurement = new Measurement();

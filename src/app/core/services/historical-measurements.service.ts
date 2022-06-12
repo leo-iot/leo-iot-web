@@ -8,7 +8,7 @@ import { Area, Section, MeasurementType, Measurement } from 'src/app/shared/mode
 import {environment} from '../../../environments/environment';
 import {error} from 'util';
 
-const url = `${environment.vmUrl}${environment.corePathPrefix}`;
+const url = `${environment.vmUrl}:${environment.vmPort}${environment.corePathPrefix}`;
 
 @Injectable()
 export class HistoricalMeasurementService {
