@@ -7,6 +7,7 @@ import {LiveMeasurementService} from '../../core/services/live-measurements.serv
 import {ModelmenuComponent} from './modelmenu/modelmenu.component';
 import {valueReferenceToExpression} from '@angular/compiler-cli/src/ngtsc/annotations/src/util';
 import {element} from 'protractor';
+import {SensortypeService} from '../../core/services/sensortype.service';
 
 @Component({
   selector: 'app-school3d',
@@ -19,8 +20,11 @@ export class School3dComponent implements OnInit {
   modelController: ModelController;
 
 
-  constructor(mqttService: MqttService, measurementService: HistoricalMeasurementService, liveService: LiveMeasurementService) {
-    const mqttInterface = new MqttInterface(mqttService, measurementService, liveService);
+  constructor(mqttService: MqttService,
+              measurementService: HistoricalMeasurementService,
+              liveService: LiveMeasurementService,
+              sensortypeService: SensortypeService) {
+    const mqttInterface = new MqttInterface(mqttService, measurementService, liveService, sensortypeService);
 
     this.modelController = new ModelController(mqttInterface);
     ModelController.instance = this.modelController;

@@ -2,17 +2,19 @@ import {MqttService} from 'ngx-mqtt';
 import {HistoricalMeasurementService} from '../../core/services/historical-measurements.service';
 import {Observable, of} from 'rxjs';
 import {LiveMeasurementService} from '../../core/services/live-measurements.service';
-import {Area, Section} from '../../shared/models';
+import {Area, MeasurementType, Section} from '../../shared/models';
 import {ModelController} from './ModelController/modelController';
 import {MeasurementTypeAndValue} from '../../modules/dashboard/components';
 import {ModelAction} from './ModelController/ModelAction';
+import {SensortypeService} from '../../core/services/sensortype.service';
 
 export class MqttInterface {
-  static floorsMqtt = ['basement', 'firstfloor', 'secondfloor', 'thirdfloor'];
+  static floorsMqtt = ['ug', 'eg', 'og', 'og2'];
 
   constructor(private mqttService: MqttService,
               private measurementService: HistoricalMeasurementService,
-              private liveService: LiveMeasurementService) {
+              private liveService: LiveMeasurementService,
+              private sensortypeService: SensortypeService) {
   }
 
 
@@ -35,25 +37,22 @@ export class MqttInterface {
 
     const s = new Section();
     s.name = selectedRoom.toLowerCase();
-
     if (!a || !s) {
       return of(new Array<MeasurementTypeAndValue>()).toPromise();
     }
 
-    const sectionWithSensors = await this.measurementService.getSensorsOfSection(a.name, s.name).toPromise();
-    const positions = [];
-    positions.push(sectionWithSensors.sensors[0].position);
-    await sectionWithSensors.sensors.forEach(sensor => {
-      if (positions.includes(!sensor.position)) {
-        positions.push(sensor.position);
-      }
+    const measurementTypes: MeasurementType[] = [];
+    const sensors = await this.sensortypeService.getSensortypes();
+    sensors.forEach(sensor => {
+      measurementTypes.push({name: sensor.name});
     });
+    s.sensors = measurementTypes;
 
     const sensorTypeAndMeasurementsArray = [];
 
-    return of(sectionWithSensors.sensors.map(async sensor => {
+    return of(s.sensors.map(async sensor => {
       try {
-        const measurement = (await this.liveService.observeSensor(a, s, positions[0], sensor.name));
+        const measurement = (await this.liveService.observeSensor(a, s, '', sensor.name));
         if (measurement === null) {
           return new Array<MeasurementTypeAndValue>();
         }

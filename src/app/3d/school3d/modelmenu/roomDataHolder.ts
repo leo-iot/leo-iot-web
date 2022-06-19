@@ -7,7 +7,7 @@ export class RoomDataHolder {
   public humidity: MeasurementTypeAndValue = this.data.find((elem) => elem.type === 'humidity');
   public co2: MeasurementTypeAndValue = this.data.find((elem) => elem.type === 'co2');
   public light: MeasurementTypeAndValue = this.data.find((elem) => elem.type === 'light');
-  public volume: MeasurementTypeAndValue = this.data.find((elem) => elem.type === 'db');
+  public volume: MeasurementTypeAndValue = this.data.find((elem) => elem.type === 'volume');
 
   constructor(public room: string, public data = new Array<MeasurementTypeAndValue>()) {
     data.forEach(value => {
@@ -30,16 +30,16 @@ export class RoomDataHolder {
   }
 
   getSensor(sensorType: string) {
-    if (sensorType === 'volume') {
-      sensorType = 'db';
-    }
+    // if (sensorType === 'volume') {
+    //   sensorType = 'db';
+    // }
     return this.data.find(elem => elem.type === sensorType);
   }
 
   getLastMeasurement(sensorType: string) {
-    if (sensorType === 'volume') {
-      sensorType = 'db';
-    }
+    // if (sensorType === 'volume') {
+    //   sensorType = 'db';
+    // }
     if (this.lastMeasurements.has(sensorType)) {
       return this.lastMeasurements.get(sensorType);
     }
