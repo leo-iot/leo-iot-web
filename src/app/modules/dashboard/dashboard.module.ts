@@ -20,6 +20,9 @@ import {
   NewsListComponent
 } from './pages';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { LiveRoomMeasurementsComponent } from './components/live-room-measurements/live-room-measurements.component';
+import { SensorboxStatusComponent } from './components/sensorbox-status/sensorbox-status.component';
+import { AlertLogComponent } from './components/alert-log/alert-log.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
     WeatherOverviewComponent,
     FloorSwitchComponent,
     NewsListComponent,
+    LiveRoomMeasurementsComponent,
+    SensorboxStatusComponent,
+    AlertLogComponent,
   ],
   imports: [
     CommonModule,

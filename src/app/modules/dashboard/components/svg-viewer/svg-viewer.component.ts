@@ -152,6 +152,11 @@ export class SvgViewerComponent implements OnInit, OnChanges, AfterViewInit {
    */
   emitSection(event: any) {
     // if (this.selectedSection === event.srcElement.id) { return; } // if its already selected, do nothing
+    const a = new Section();
+    a.name = event.srcElement.id;
+    this.selectedSection = event.srcElement.id;
+    this.sectionClicked.emit(a);
+    return;
     let sectIdx = -1;
     this.sections.filter((s, i) => {
       if (s.name === event.srcElement.id) { sectIdx = i; }

@@ -28,7 +28,7 @@ export class MqttInterface {
    */
   async getMeasurementTypesOfRoom(selectedRoom: string, selectedFloor: string): Promise<Array<MeasurementTypeAndValue>> {
     // Necessary becuase the name of the 3d model and the mqtt topic is different
-    const index = ModelController.instance.FLOORS.findIndex(value => value === selectedFloor);
+    const index = ModelController.FLOORS.findIndex(value => value === selectedFloor);
     selectedFloor = MqttInterface.floorsMqtt[index];
 
     const a = new Area();

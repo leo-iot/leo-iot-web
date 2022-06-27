@@ -147,7 +147,7 @@ export class RoomMeasurementsComponent implements OnChanges {
     return of(sectionWithSensors.sensors.map(async sensor => {
       try {
         let measurement = (await this.liveService.observeSensor(a, s, positions[0], sensor.name));
-        if (measurement === null){
+        if (measurement === null) {
           return false;
         }
         sensorTypeAndMeasurementsArray.push({
