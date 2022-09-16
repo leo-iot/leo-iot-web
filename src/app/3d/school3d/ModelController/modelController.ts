@@ -25,7 +25,7 @@ export class ModelController {
   static renderer: WebGLRenderer;
   static scene: Scene;
 
-  FLOORS = ['cellar', 'ground_floor', 'first_floor', 'second_floor', 'ceiling'];
+  static FLOORS = ['cellar', 'ground_floor', 'first_floor', 'second_floor', 'ceiling'];
 
   currentlyMoving: boolean;
   currentRoom = new RoomDataHolder('');
@@ -53,13 +53,13 @@ export class ModelController {
   getFloorOfRoom(floorName: string) {
     switch (floorName[0]) {
       case 'U':
-        return this.FLOORS[0];
+        return ModelController.FLOORS[0];
       case 'E':
-        return this.FLOORS[1];
+        return ModelController.FLOORS[1];
       case '1':
-        return this.FLOORS[2];
+        return ModelController.FLOORS[2];
       case '2':
-        return this.FLOORS[3];
+        return ModelController.FLOORS[3];
       default:
         return '';
     }
@@ -151,14 +151,14 @@ export class ModelController {
   }
 
   getHelpChar(num) {
-    switch (this.FLOORS[num].toString()) {
-      case this.FLOORS[0]:
+    switch (ModelController.FLOORS[num].toString()) {
+      case ModelController.FLOORS[0]:
         return 'U';
-      case this.FLOORS[1]:
+      case ModelController.FLOORS[1]:
         return 'E';
-      case this.FLOORS[2]:
+      case ModelController.FLOORS[2]:
         return '1';
-      case this.FLOORS[3]:
+      case ModelController.FLOORS[3]:
         return '2';
     }
   }
@@ -169,8 +169,8 @@ export class ModelController {
 
       const helpChar = this.getHelpChar(i);
 
-      rooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== this.FLOORS[1]
-        && x.name !== this.FLOORS[2] && x.name !== this.FLOORS[3]);
+      rooms = this.objectArr.filter(x => x.name[0] === helpChar && x.name !== ModelController.FLOORS[1]
+        && x.name !== ModelController.FLOORS[2] && x.name !== ModelController.FLOORS[3]);
 
       for (const room of rooms) {
         const objectEnable = this.objectArr.find(x => x.name === room.name);
@@ -192,25 +192,25 @@ export class ModelController {
    */
   async floorSelect(floorname) {
 
-    const floorIndex = this.FLOORS.indexOf(floorname);
+    const floorIndex = ModelController.FLOORS.indexOf(floorname);
     if (this.movingIndex === floorIndex || this.currentlyMoving) {
       return;
     }
     this.currentlyMoving = true;
     this.movingIndex = floorIndex;
 
-    this.selectedFloor = this.FLOORS[floorIndex];
+    this.selectedFloor = ModelController.FLOORS[floorIndex];
 
     // move down
     for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
-      this.objectArr.find(x => x.name === this.FLOORS[i]).visible = true;
+      this.objectArr.find(x => x.name === ModelController.FLOORS[i]).visible = true;
     }
 
-    if (this.objectsUp.includes(this.movingIndex) && this.FLOORS.includes(floorname)) {
+    if (this.objectsUp.includes(this.movingIndex) && ModelController.FLOORS.includes(floorname)) {
       const objs = [];
       for (let i = this.objectsUp[0]; i <= this.movingIndex; i++) {
         if (this.objectsUp.includes(i)) {
-          objs.push(this.FLOORS[i]);
+          objs.push(ModelController.FLOORS[i]);
         }
       }
       await this.moveMultipleObjects('down', objs);
@@ -218,25 +218,25 @@ export class ModelController {
       // enabled rooms
       this.setRoomsVisibility(this.objectsUp[0], this.movingIndex, true);
 
-    } else if (this.FLOORS.includes(floorname)) {   // move up
+    } else if (ModelController.FLOORS.includes(floorname)) {   // move up
       // disabled rooms
-      this.setRoomsVisibility(this.movingIndex + 1, this.FLOORS.length - 1, false);
+      this.setRoomsVisibility(this.movingIndex + 1, ModelController.FLOORS.length - 1, false);
 
       const objs = [];
-      for (let k = this.FLOORS.length - 1; k > this.movingIndex; k--) {
+      for (let k = ModelController.FLOORS.length - 1; k > this.movingIndex; k--) {
         if (!this.objectsUp.includes(k)) {
-          objs.push(this.FLOORS[k]);
+          objs.push(ModelController.FLOORS[k]);
         }
       }
       await this.moveMultipleObjects('up', objs);
 
-      for (let i = this.FLOORS.length - 1; i > this.movingIndex; i--) {
-        this.objectArr.find(x => x.name === this.FLOORS[i]).visible = false;
+      for (let i = ModelController.FLOORS.length - 1; i > this.movingIndex; i--) {
+        this.objectArr.find(x => x.name === ModelController.FLOORS[i]).visible = false;
       }
     }
 
     this.objectsUp = [];
-    for (let i = this.movingIndex + 1; i <= this.FLOORS.length - 1; i++) {
+    for (let i = this.movingIndex + 1; i <= ModelController.FLOORS.length - 1; i++) {
       this.objectsUp.push(i);
     }
     this.objectsUp.sort();
@@ -272,7 +272,7 @@ export class ModelController {
       ModelController.scene,
       this.objects,
       this.objectArr,
-      this.FLOORS,
+      ModelController.FLOORS,
       () => this.isLoading = false,
       this.floorObject);
 
@@ -328,7 +328,7 @@ export class ModelController {
     if (intersect.length !== 0) {
       const floorName = intersect[0].object.name;
 
-      if (!this.FLOORS.includes(floorName)) {
+      if (!ModelController.FLOORS.includes(floorName)) {
         this.openMenu();
         await this.sendRoom(floorName);
       } else {
