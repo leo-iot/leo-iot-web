@@ -3,6 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { HistoricalMeasurementService } from 'src/app/core/services/historical-measurements.service';
 import { MeasurementType, Area, Section } from 'src/app/shared/models';
+import {RoomDataHolder} from '../../../../3d/school3d/modelmenu/roomDataHolder';
+import {MqttService} from 'ngx-mqtt';
+import {LiveMeasurementService} from '../../../../core/services/live-measurements.service';
+import {SensortypeService} from '../../../../core/services/sensortype.service';
+import {MqttInterface} from '../../../../3d/school3d/mqttInterface';
 
 @Component({
   selector: 'app-grid-layout',
@@ -42,6 +47,11 @@ export class GridLayoutComponent implements OnInit {
    */
   expandForHistory = false;
 
+  currentRoom: RoomDataHolder;
+
+  private mqttInterface: MqttInterface;
+
+
   /**
    *Creates an instance of GridLayoutComponent.
    *Setting the default value for the initially displayed floor (this is global and should be changed only here)
@@ -53,8 +63,15 @@ export class GridLayoutComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private layoutService: HistoricalMeasurementService
+    private layoutService: HistoricalMeasurementService,
+    mqttService: MqttService,
+    measurementService: HistoricalMeasurementService,
+    liveService: LiveMeasurementService,
+    sensortypeService: SensortypeService
   ) {
+
+    this.mqttInterface = new MqttInterface(mqttService, measurementService, liveService, sensortypeService);
+
     this.currentArea.name = 'firstfloor';
   }
 
@@ -72,36 +89,9 @@ export class GridLayoutComponent implements OnInit {
   async validateRoute() {
     this.route.params.subscribe(params => {
       if (params['area']) {
-        this.layoutService.getAreas().subscribe(areas => {
-          let areaIdx = 0;
-          const filteredAreas = areas.filter((a, i) => {
-            if (a.name === params['area']) {
-              areaIdx = i;
-            }
-            return a.name === params['area'];
-          });
-          if (filteredAreas.length > 0) {
-            this.currentArea = areas[areaIdx];
-            if (params['section']) {
-              this.layoutService.getSections(this.currentArea.name).subscribe(sections => {
-                let sectIdx = 0;
-                const filteredSections = sections.filter((s, i) => {
-                  if (s.name === params['section']) {
-                    sectIdx = i;
-                  }
-                  return s.name === params['section'];
-                });
-                if (filteredSections.length > 0) {
-                  this.currentSection = sections[sectIdx];
-                } else {
-                  this.router.navigate(['/dashboard', this.currentArea.name]);
-                }
-              });
-            }
-          } else {
-            this.router.navigate(['']);
-          }
-        });
+
+      } else {
+        this.router.navigate(['dashboard', this.currentArea.name]);
       }
     });
   }
@@ -113,12 +103,21 @@ export class GridLayoutComponent implements OnInit {
     this.router.navigate(['dashboard', area.name]);
   }
 
-  changeCurrentSection(section: Section) {
+  async changeCurrentSection(section: Section) {
     this.currentSection = section;
-    this.changeCurrentMeasurementType(null);
-    if (section) {
-      this.router.navigate(['dashboard', this.currentArea.name, section.name]);
+    const convertFloorname = new Map<string, string>([
+      ['secondfloor', 'first_floor'],
+      ['thirdfloor', 'second_floor'],
+      ['firstfloor', 'ground_floor'],
+    ]);
+    let measurementTypeAndValues;
+    try {
+      measurementTypeAndValues =
+        await this.mqttInterface.getMeasurementTypesOfRoom(section.name, convertFloorname.get(this.currentArea.name));
+    } catch (e) {
+      return;
     }
+    this.currentRoom = new RoomDataHolder(section.name, measurementTypeAndValues);
   }
 
   changeCurrentMeasurementType(mType: MeasurementType) {

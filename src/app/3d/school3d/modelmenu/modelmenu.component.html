@@ -17,20 +17,20 @@
     <table>
       <tr>
         <td>
-          <p class="itemName">Stockwerk:</p>
+          <p class="itemName">Floor:</p>
         </td>
         <td>
           <div class="mDiv">
             <button type="button" id="cellar" class="smallButton"
                     [style.backgroundColor]="floorBackgroundColor('cellar')"
                     [style.color]="floorColor('cellar')"
-                    (click)="floorSelectEvent('cellar');">K
+                    (click)="floorSelectEvent('cellar');">C
             </button>
             <button type="button" id="ground_floor" class="smallButton"
                     [style.backgroundColor]="floorBackgroundColor('ground_floor')"
                     [style.color]="floorColor('ground_floor')"
                     (click)="floorSelectEvent('ground_floor');">
-              E
+              G
             </button>
             <button type="button" id="first_floor" class="smallButton"
                     [style.backgroundColor]="floorBackgroundColor('first_floor')"
@@ -69,7 +69,7 @@
                   [style.backgroundColor]="buttonBackgroundColor('humidity')"
                   [style.color]="buttonColor('humidity')"
                   (click)="clickEvent('humidity')">
-            Luftfeuchtigkeit
+            Humidity
           </button>
           <br>
           <div class="placeholder"></div>
@@ -88,19 +88,19 @@
             Licht
           </button>-->
           <br>
-          <div class="placeholder"></div>
+          <!--<div class="placeholder"></div>
           <button type="button" id="volume" class="bigButton"
                   [style.backgroundColor]="buttonBackgroundColor('volume')"
                   [style.color]="buttonColor('volume')"
                   (click)="clickEvent('volume')">
             Lautstärke
-          </button>
+          </button>-->
           <br>
         </td>
       </tr>
       <tr>
         <td>
-          <div class="room" class="itemName">Raum:</div>
+          <div class="room" class="itemName">Room:</div>
         </td>
         <td>
           <div id="roomName" class="itemName">{{getCurrentRoom()}}</div>

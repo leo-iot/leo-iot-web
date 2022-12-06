@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+import {MatTabChangeEvent} from '@angular/material';
+
+@Component({
+  selector: 'app-alert-log',
+  templateUrl: './alert-log.component.html',
+  styleUrls: ['./alert-log.component.scss']
+})
+export class AlertLogComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  tabSwitch($event: MatTabChangeEvent) {
+
+  }
+}
