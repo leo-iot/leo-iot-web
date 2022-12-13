@@ -1,5 +1,5 @@
 ##STAGE 0, building sources
-FROM node:dubnium as build-stage
+FROM --platform=linux/amd64 node:dubnium as build-stage
 
 #setting workdir
 WORKDIR /app
