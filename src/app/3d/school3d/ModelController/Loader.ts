@@ -3,9 +3,11 @@ import {MTLLoader} from 'three/examples/jsm/loaders/MTLLoader';
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
 import {Scene} from 'three';
 import {ModelController} from './modelController';
+import {environment} from "../../../../environments/environment.prod";
 
 
 export class Loader {
+  private pathPrefix: string = environment.pathPrefix;
 
   constructor(private modelName: String,
               private scene: Scene,
@@ -46,14 +48,14 @@ export class Loader {
     const loadingManager = this.generateLoadingManager();
 
     const mtlLoader = new MTLLoader();
-    mtlLoader.setPath('/assets/models/');
+    mtlLoader.setPath(this.pathPrefix + '/assets/models/');
     const modelUrl = this.modelName + '.mtl';
     mtlLoader.load(modelUrl, (materials) => {
       materials.preload();
 
       const objLoader = new OBJLoader(loadingManager);
       objLoader.setMaterials(materials);
-      objLoader.setPath('/assets/models/');
+      objLoader.setPath(this.pathPrefix + '/assets/models/');
       objLoader.load(this.modelName + '.obj', (object) => {
         this.scene.add(object);
         for (const o of object.children) {
