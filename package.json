@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href /j.rathberger/test/ --deploy-url /j.rathberger/test/",
-    "build-i18n": "ng build --prod --base-href /j.rathberger/test/ --deploy-url /j.rathberger/test/",
+    "build": "ng build --prod --base-href /j.rathberger/frontend/ --deploy-url /j.rathberger/frontend/",
+    "build-i18n": "ng build --prod --base-href /j.rathberger/frontend/ --deploy-url /j.rathberger/frontend/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
