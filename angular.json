@@ -203,5 +203,8 @@
       }
     }
   },
-  "defaultProject": "iot-webclient"
+  "defaultProject": "iot-webclient",
+  "cli": {
+    "analytics": false
+  }
 }

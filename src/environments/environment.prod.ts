@@ -7,5 +7,5 @@ export const environment = {
   mqttPath: '/mqtt',
   mqttPort: 5055,
   vmPort: 8080,
-  pathPrefix: '/j.rathberger/frontend'
+  pathPrefix: '/m.eder3/frontend'
 };
