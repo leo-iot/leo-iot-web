@@ -24,6 +24,16 @@ $stroke-width: 0.0625rem;
     stroke: $svg-highlight-color;
 }
 
+.dot {
+  animation: dot 1.5s ease-in-out infinite;
+}
+
+@keyframes dot {
+  50% {
+    opacity: 0;
+  }
+}
+
 /* short explanation of all the classes
 *   .a => all polylines (joined lines for building outline)
 *   .b => the stairs and roof parts (transparent parts)
