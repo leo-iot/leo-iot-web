@@ -2,7 +2,7 @@
 <mat-grid-list *ngIf="!expandForHistory; else expandHistory" class="fullscreen" cols="5" gutterSize="1.5rem" rowHeight="fit">
 
     <!--containing the svg viewer-->
-    <mat-grid-tile rowspan="4" colspan="2">
+    <mat-grid-tile rowspan="5" colspan="2">
         <app-svg-viewer [displayArea]="currentArea" [displaySection]="currentSection" (sectionClicked)="changeCurrentSection($event)"
             (areaClicked)="changeCurrentArea($event)"></app-svg-viewer>
     </mat-grid-tile>
@@ -18,25 +18,25 @@
         </ng-template>
     </mat-grid-tile>
 -->
-    <mat-grid-tile class="custom-height" rowspan="3" colspan="3">
+    <mat-grid-tile class="custom-height" rowspan="3" colspan="2">
       <app-live-room-measurements *ngIf="!currentMeasurementType; " [displayArea]="currentArea"
                                   [displaySection]="currentSection" [currentRoom]="currentRoom"></app-live-room-measurements>
     </mat-grid-tile>
-    <!--containing the current weather infos-->
-    <mat-grid-tile rowspan="4" colspan="2" class="scrollable">
+
+  <!--containing SENSOR STATUS-->
+  <mat-grid-tile rowspan="3" colspan="1" class="scrollable">
+    <app-sensorbox-status></app-sensorbox-status>
+  </mat-grid-tile>
+
+    <!--containing ALERTS & HISTORY-->
+    <mat-grid-tile rowspan="4" colspan="3" class="scrollable">
       <app-alert-log></app-alert-log>
     </mat-grid-tile>
 
-
-    <!--containing the news list-->
-    <mat-grid-tile rowspan="4" class="scrollable">
-      <app-sensorbox-status></app-sensorbox-status>
-    </mat-grid-tile>
-
-    <!--containing the public transport components-->
-    <mat-grid-tile rowspan="3" colspan="2">
-      <app-weather-overview></app-weather-overview>
-    </mat-grid-tile>
+    <!--containing TIME-->
+  <mat-grid-tile rowspan="2" colspan="2">
+    <app-weather-overview></app-weather-overview>
+  </mat-grid-tile>
 </mat-grid-list>
 <app-footer-text></app-footer-text>
 
