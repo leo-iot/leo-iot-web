@@ -1,7 +1,16 @@
 @use '@angular/material' as mat;
 @import 'src/assets/sass/typography';
 
-@include mat.core($custom-typography);
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy($custom-typography);`
+@include mat.all-legacy-component-typographies($custom-typography);
+@include mat.legacy-core();
 
 // default: dark theme
 $app-dark-primary: mat.define-palette(mat.$orange-palette, 700, 500, 900);
@@ -10,7 +19,7 @@ $app-dark-warn:    mat.define-palette(mat.$red-palette);
 
 $app-dark-theme: mat.define-dark-theme($app-dark-primary, $app-dark-accent, $app-dark-warn );
 
-@include mat.all-component-themes($app-dark-theme);
+@include mat.all-legacy-component-themes($app-dark-theme);
 
 // light theme for styling notification buttons
 $app-notification-primary: mat.define-palette(mat.$green-palette, 600, 300, 800);
@@ -20,7 +29,7 @@ $app-notification-warn:    mat.define-palette(mat.$red-palette, 900);
 $app-notification-theme: mat.define-light-theme($app-notification-primary, $app-notification-accent, $app-notification-warn );
 
 .app-notification-theme {
-    @include mat.all-component-themes($app-notification-theme);
+    @include mat.all-legacy-component-themes($app-notification-theme);
     color: #000;
 }
 
@@ -32,6 +41,6 @@ $app-light-warn:    mat.define-palette(mat.$red-palette, 900);
 $app-light-theme: mat.define-light-theme($app-light-primary, $app-light-accent, $app-light-warn );
 
 .app-light-theme {
-    @include mat.all-component-themes($app-light-theme);
+    @include mat.all-legacy-component-themes($app-light-theme);
     color: #000;
 }

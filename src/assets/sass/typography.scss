@@ -4,7 +4,7 @@
 // the @font-faces were generated using https://www.fontsquirrel.com/fonts/caviar-dreams and are imported in index.html
 // the config is loaded in the thiming file by passing it on to the mat-core() function
 
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.define-legacy-typography-config(
     $font-family: 'caviar_dreamsregular, Arial, sans-serif',
     $headline: mat.define-typography-level(2rem, 2rem, 900),           /* the h1 tag */
     $title: mat.define-typography-level(1.5rem, 1.5rem, 900),          /* the h2 tag */
