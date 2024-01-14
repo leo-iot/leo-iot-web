@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LanguageOptionsComponent } from './language-options.component';
 import { LanguageService } from 'src/app/core/services/language.service';
@@ -11,7 +11,7 @@ describe('LanguageOptionsComponent', () => {
   let component: LanguageOptionsComponent;
   let fixture: ComponentFixture<LanguageOptionsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LanguageOptionsComponent],
       imports: [BrowserAnimationsModule, MaterialModule, FormsModule, ReactiveFormsModule, RouterTestingModule],

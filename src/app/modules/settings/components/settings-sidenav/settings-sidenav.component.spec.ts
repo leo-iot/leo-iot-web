@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SettingsSidenavComponent } from './settings-sidenav.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -9,7 +9,7 @@ describe('SettingsSidenavComponent', () => {
   let component: SettingsSidenavComponent;
   let fixture: ComponentFixture<SettingsSidenavComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsSidenavComponent],
       imports: [BrowserAnimationsModule, RouterTestingModule, MaterialModule]

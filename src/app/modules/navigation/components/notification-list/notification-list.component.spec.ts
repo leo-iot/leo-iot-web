@@ -1,5 +1,5 @@
 import { MaterialModule } from '../../../../shared/modules/material.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NotificationListComponent } from './notification-list.component';
 import { NotificationComponent } from '../index';
@@ -26,7 +26,7 @@ describe('NotificationListComponent', () => {
   let component: NotificationListComponent;
   let fixture: ComponentFixture<NotificationListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NotificationListComponent, NotificationComponent ],
       imports: [MaterialModule, RouterTestingModule, MqttModule.forRoot(MQTT_SERVICE_OPTIONS)],
