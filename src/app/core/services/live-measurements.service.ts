@@ -2,8 +2,6 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, BehaviorSubject, throwError} from 'rxjs';
 import {MqttService, IMqttMessage} from 'ngx-mqtt';
 import {Area, Section, Measurement} from 'src/app/shared/models';
-import {MeasurementTypeAndValue} from '../../modules/dashboard/components';
-import {ParseArgumentException} from '@angular/cli/models/parser';
 import {ModelAction} from '../../3d/school3d/ModelController/ModelAction';
 import {SensortypeService} from './sensortype.service';
 
@@ -227,14 +225,14 @@ export class LiveMeasurementService {
 
     return new Observable<Measurement>(observer => {
       this.observe(`${area.name}/${section.name}/${sensor}/state`)
-      .subscribe((message: IMqttMessage) => {
-        const json = JSON.parse(message.payload.toString());
-        const m: Measurement = new Measurement();
-        m.value = json.value;
-        m.timestamp = json.timestamp;
-        m.unit = munit;
-        observer.next(m);
-      });
+        .subscribe((message: IMqttMessage) => {
+          const json = JSON.parse(message.payload.toString());
+          const m: Measurement = new Measurement();
+          m.value = json.value;
+          m.timestamp = json.timestamp;
+          m.unit = munit;
+          observer.next(m);
+        });
     });
   }
 

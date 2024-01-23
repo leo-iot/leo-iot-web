@@ -5,7 +5,6 @@ import {MqttService} from 'ngx-mqtt';
 import {HistoricalMeasurementService} from '../../core/services/historical-measurements.service';
 import {LiveMeasurementService} from '../../core/services/live-measurements.service';
 import {ModelmenuComponent} from './modelmenu/modelmenu.component';
-import {valueReferenceToExpression} from '@angular/compiler-cli/src/ngtsc/annotations/src/util';
 import {element} from 'protractor';
 import {SensortypeService} from '../../core/services/sensortype.service';
 

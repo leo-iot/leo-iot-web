@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  vmUrl: 'https://vm139.htl-leonding.ac.at',
+  vmUrl: 'http://localhost',
   mqttUrl: 'vm90.htl-leonding.ac.at',
   corePathPrefix: '',
   mqttPathPrefix: '/broker',
