@@ -19,10 +19,10 @@ import {
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: `${environment.mqttUrl}`,
   // path: `${environment.mqttPathPrefix}${environment.mqttPath}`,
-  protocol: 'ws',
+  protocol: 'wss',
   port: environment.mqttPort,
-  username: 'student',
-  password: 'passme'
+  username: 'leo-user',
+  password: 'E!2qH9cc9G'
 };
 
 @NgModule({

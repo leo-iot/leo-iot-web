@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { WeatherService } from 'src/app/core/services/weather.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Measurement } from 'src/app/shared/models';
 
 @Component({
@@ -22,7 +22,7 @@ export class WeatherOverviewComponent implements OnInit, OnDestroy {
    *
    * @memberof WeatherOverviewComponent
    */
-  dateTime = new FormControl((new Date()).toISOString());
+  dateTime = new UntypedFormControl((new Date()).toISOString());
 
   /**
    *Input to collapse and expand the weather overview

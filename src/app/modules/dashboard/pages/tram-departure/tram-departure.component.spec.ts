@@ -1,5 +1,5 @@
 import { ProgressBarComponent } from '../../../../shared/components/progress-bar/progress-bar.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TramDepartureComponent } from './tram-departure.component';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
@@ -9,7 +9,7 @@ describe('TramDepartureComponent', () => {
   let component: TramDepartureComponent;
   let fixture: ComponentFixture<TramDepartureComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TramDepartureComponent, ProgressBarComponent],
       imports: [MaterialModule],

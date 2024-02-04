@@ -1,5 +1,5 @@
 import { MaterialModule } from '../../modules/material.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NotificationToggleComponent } from './notification-toggle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,7 +8,7 @@ describe('NotificationToggleComponent', () => {
   let component: NotificationToggleComponent;
   let fixture: ComponentFixture<NotificationToggleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NotificationToggleComponent ],
       imports: [ BrowserAnimationsModule, MaterialModule ]

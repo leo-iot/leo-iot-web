@@ -10,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: 'src/app/modules/dashboard/dashboard.module#DashboardModule',
+        loadChildren: () => import('src/app/modules/dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
         path: 'settings',
-        loadChildren: 'src/app/modules/settings/settings.module#SettingsModule',
+        loadChildren: () => import('src/app/modules/settings/settings.module').then(m => m.SettingsModule),
       },
     ]
   },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Language } from 'src/app/shared/models';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { LanguageService } from 'src/app/core/services/language.service';
 import { Router } from '@angular/router';
@@ -35,7 +35,7 @@ export class LanguageOptionsComponent implements OnInit {
    *
    * @memberof OptionsComponent
    */
-  langControl = new FormControl();
+  langControl = new UntypedFormControl();
 
   /**
    *Creates an instance of LanguageOptionsComponent.

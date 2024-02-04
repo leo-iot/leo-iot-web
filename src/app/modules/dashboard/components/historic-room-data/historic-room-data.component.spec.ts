@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LanguageService } from '../../../../core/services/language.service';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HistoricRoomDataComponent } from './historic-room-data.component';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
@@ -12,7 +12,7 @@ describe('HistoricRoomDataComponent', () => {
   let component: HistoricRoomDataComponent;
   let fixture: ComponentFixture<HistoricRoomDataComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HistoricRoomDataComponent ],
       imports: [ MaterialModule, RouterTestingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule ],
