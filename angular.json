@@ -69,7 +69,6 @@
               "outputHashing": "all",
               "outputPath": "dist/iot-webclient/en/",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -81,18 +80,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "/en/",
-              "i18nFile": "src/locale/messages-en.xliff",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en",
-              "i18nMissingTranslation": "error"
+              "baseHref": "/en/"
             },
             "production-de": {
               "optimization": true,
               "outputHashing": "all",
               "outputPath": "dist/iot-webclient/de/",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -104,11 +98,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "/de/",
-              "i18nFile": "src/locale/messages-de.xliff",
-              "i18nFormat": "xlf",
-              "i18nLocale": "de",
-              "i18nMissingTranslation": "error"
+              "baseHref": "/de/"
             }
           }
         },
