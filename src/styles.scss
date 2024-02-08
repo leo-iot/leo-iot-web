@@ -1,14 +1,14 @@
 /*adding open source weather icons from https://github.com/erikflowers/weather-icons*/
 
-/*@import "./assets/weather-icons/weather-icons";
-@import "./assets/sass/mixins.scss";*/
+@import "./assets/weather-icons/weather-icons.scss";
+@import "./assets/sass/mixins.scss";
 
 body {
   margin: 0;
 }
 
 html {
-  /*@include custom-scrollbar(0);*/
+  @include custom-scrollbar(0);
   background-color: #1b2023;
 }
 

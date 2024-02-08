@@ -13,6 +13,12 @@ export const environment = {
   vmPort: 8080
 };
 
+export const mapToThisRoom = {
+  production: true,
+  fromThisRoom: '1Aula', // Name of box
+  toThisRoom: 'E72'
+};
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
