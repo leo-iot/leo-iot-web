@@ -33,6 +33,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: install ssh key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.VM08_PRIVATE_KEY }}
+
+      - name: create .ssh/known_hosts
+        run: |
+          ssh-keyscan -H -t rsa -v ${{ secrets.VM_URL }}  >> ~/.ssh/known_hosts
+
       - name: install sshpass
         run: |
          sudo apt-get install sshpass
