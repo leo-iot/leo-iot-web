@@ -25,3 +25,20 @@ jobs:
           docker build -t ghcr.io/leo-iot/leo-iot-web/webapp:latest .
           docker image ls
           docker push ghcr.io/leo-iot/leo-iot-web/webapp
+  vm08:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: install sshpass
+        run: |
+         sudo apt-get install sshpass
+
+      - name: copy files to leo-vm
+        run: |
+          pwd
+          sshpass -p '${{ secrets.VM08_PASSWORD }}' scp docker-compose.yaml ${{ secrets.VM08_USER }}@${{ secrets.VM08_URL }}:
+          
