@@ -7,6 +7,7 @@ import {LiveMeasurementService} from '../../core/services/live-measurements.serv
 import {ModelmenuComponent} from './modelmenu/modelmenu.component';
 import {element} from 'protractor';
 import {SensortypeService} from '../../core/services/sensortype.service';
+import {environment} from "../../../environments/environment.prod";
 
 @Component({
   selector: 'app-school3d',
@@ -17,6 +18,7 @@ export class School3dComponent implements OnInit {
 
   @ViewChild('3dContainer', {static: false}) dContainer: any;
   modelController: ModelController;
+  pathPrefix: string = environment.pathPrefix;
 
 
   constructor(mqttService: MqttService,

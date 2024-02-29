@@ -4,6 +4,7 @@ import {ModelController} from '../ModelController/modelController';
 import {MeasurementTypeAndValue} from '../../../modules/dashboard/components';
 import {RoomDataHolder} from './roomDataHolder';
 import {interval, Subscription} from 'rxjs';
+import {environment} from "../../../../environments/environment.prod";
 
 
 @Component({
@@ -33,6 +34,7 @@ export class ModelmenuComponent {
   @Input() applyFilter;
   @Input() floorSelect;
   private curFilterSubs: Subscription;
+  imagePrefix: string = environment.pathPrefix;
 
 
   constructor() {

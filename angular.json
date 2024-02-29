@@ -192,5 +192,9 @@
         }
       }
     }
+  },
+  "defaultProject": "iot-webclient",
+  "cli": {
+    "analytics": false
   }
 }

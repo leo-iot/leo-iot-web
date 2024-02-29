@@ -4,19 +4,14 @@
 
 export const environment = {
   production: true,
-  vmUrl: 'http://localhost',
+  vmUrl: 'https://vm08.htl-leonding.ac.at',
   mqttUrl: 'mqtt.htl-leonding.ac.at',
   corePathPrefix: '',
   mqttPathPrefix: '/broker',
   mqttPath: '/mqtt',
   mqttPort: 5055,
-  vmPort: 8080
-};
-
-export const mapToThisRoom = {
-  production: true,
-  fromThisRoom: '1Aula', // Name of box
-  toThisRoom: 'E72'
+  vmPort: 8080,
+  pathPrefix: '/m.eder3/frontend'
 };
 
 /*

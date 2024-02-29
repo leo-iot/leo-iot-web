@@ -7,10 +7,10 @@
   <div id="menuBackground" [@slideInOut]="animationState()"></div>
 
   <button id="open" *ngIf="!menuOpened" (click)="openMenuEvent()">
-    <img src="../../../../assets/images/open.png">
+    <img src="{{imagePrefix}}/assets/images/open.png">
   </button>
   <button id="close" *ngIf="menuOpened" (click)="closeMenuEvent()">
-    <img src="../../../../assets/images/close.png">
+    <img src="{{imagePrefix}}/assets/images/close.png">
   </button>
 
   <div *ngIf="menuOpened">

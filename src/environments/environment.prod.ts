@@ -6,5 +6,6 @@ export const environment = {
   mqttPathPrefix: '/broker',
   mqttPath: '/mqtt',
   mqttPort: 5055,
-  vmPort: 8080
+  vmPort: 8080,
+  pathPrefix: '/m.eder3/frontend'
 };
