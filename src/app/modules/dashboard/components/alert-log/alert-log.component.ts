@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatTabChangeEvent} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-alert-log',
@@ -8,7 +8,8 @@ import {MatTabChangeEvent} from '@angular/material';
 })
 export class AlertLogComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

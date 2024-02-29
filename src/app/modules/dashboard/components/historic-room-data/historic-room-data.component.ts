@@ -1,12 +1,17 @@
-import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatInput, MatButtonToggleGroup, MatTabGroup } from '@angular/material';
+import {Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatInput} from '@angular/material/input';
+import {MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatTabGroup} from '@angular/material/tabs';
 
-import { HistoricalMeasurementService } from 'src/app/core/services/historical-measurements.service';
-import { MeasurementType, Measurement, Area, Section } from 'src/app/shared/models';
+import {HistoricalMeasurementService} from 'src/app/core/services/historical-measurements.service';
+import {MeasurementType, Measurement, Area, Section} from 'src/app/shared/models';
 
-import { Chart } from 'chart.js';
+import {Chart} from 'chart.js';
 import 'chartjs-plugin-zoom';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 /**
  *This component is massive, massively broken, dont change it if you dont absolutely need to
@@ -103,7 +108,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    * @type {MatInput}
    * @memberof HistoricalMeasurementsComponent
    */
-  @ViewChild('fromPickerInput', {static: false, read: MatInput }) fromPickerInput: MatInput;
+  @ViewChild('fromPickerInput', {static: false, read: MatInput}) fromPickerInput: MatInput;
 
   /**
    *toPickerInput reference
@@ -111,7 +116,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    * @type {MatInput}
    * @memberof HistoricalMeasurementsComponent
    */
-  @ViewChild('toPickerInput', {static: false, read: MatInput }) toPickerInput: MatInput;
+  @ViewChild('toPickerInput', {static: false, read: MatInput}) toPickerInput: MatInput;
 
   /**
    *fromPicker reference
@@ -125,7 +130,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    *
    * @memberof HistoricalMeasurementsComponent
    */
-  @ViewChild('toPicker',{static: false}) toPicker;
+  @ViewChild('toPicker', {static: false}) toPicker;
 
   /**
    *displayed column definitions for mat table (order is interpreted)
@@ -163,7 +168,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    * @type {MatSort}
    * @memberof HistoricalMeasurementsComponent
    */
-  @ViewChild(MatSort,{static: false}) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   /**
    *tab group reference
@@ -171,7 +176,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    * @type {MatTabGroup}
    * @memberof HistoricRoomDataComponent
    */
-  @ViewChild(MatTabGroup,{static: false}) tabs: MatTabGroup;
+  @ViewChild(MatTabGroup, {static: false}) tabs: MatTabGroup;
 
   /**
    *chart.js chart object
@@ -201,7 +206,8 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    *Creates an instance of HistoricalMeasurementsComponent.
    * @memberof HistoricalMeasurementsComponent
    */
-  constructor(private measurementsService: HistoricalMeasurementService, private router: Router) { }
+  constructor(private measurementsService: HistoricalMeasurementService, private router: Router) {
+  }
 
   ngOnInit() {
     this.applyFilters().then(_ => {
@@ -271,7 +277,7 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
             borderWidth: 1,
             backgroundColor: '#ffffff33',
             fill: true,
-            lineTension: 0.4,
+            tension: 0.4,
             pointBackgroundColor: '#F57C00'
           }
         ]
@@ -279,10 +285,6 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        responsiveAnimationDuration: 1000,
-        legend: {
-          display: false
-        },
         elements: {
           point: {
             radius: 0,
@@ -291,27 +293,32 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
           }
         },
         scales: {
-          yAxes: [{
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 50,
-              fontColor: '#fff'
-            },
-            gridLines: {
-              color: '#ffffff'
-            },
-          }],
-          xAxes: [{
-            gridLines: {
+          y: {
+            suggestedMin: 0,
+            suggestedMax: 50,
+          },
+          x: {
+            grid: {
               display: false,
               color: '#ffffff'
             },
-          }]
+          }
         },
         plugins: {
           zoom: {
-            enabled: true,
-            mode: 'xy',
+            pan: {
+              enabled: true,
+              mode: 'xy',
+            },
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: 'xy',
+            }
           }
         }
       },
@@ -356,7 +363,9 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
    * @memberof HistoricalMeasurementsComponent
    */
   async applyFilters() {
-    if (!this.displayArea || !this.displaySection || !this.displayType) { return; }
+    if (!this.displayArea || !this.displaySection || !this.displayType) {
+      return;
+    }
     this.isLoadingResults = true;
 
     if (this.fromPicker.startAt && this.toPicker.startAt) {
@@ -471,8 +480,8 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
       this.displaySection.name.toLowerCase(),
       this.displayType.name.toLowerCase(),
       new Date().toDateString()).toPromise().then(data => {
-        result = data;
-      });
+      result = data;
+    });
     return result;
   }
 
@@ -500,11 +509,11 @@ export class HistoricRoomDataComponent implements OnInit, OnChanges {
   }
 
   /**
- *Helper function to get all measurements from the current year as daily avgs
- *
- * @returns Measurements[]
- * @memberof HistoricalMeasurementsComponent
- */
+   *Helper function to get all measurements from the current year as daily avgs
+   *
+   * @returns Measurements[]
+   * @memberof HistoricalMeasurementsComponent
+   */
   async getMeasurementsYear() {
     const from = new Date(new Date().setMonth(0, 0));
     const to = new Date();

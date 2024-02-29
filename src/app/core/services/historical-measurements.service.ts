@@ -6,7 +6,6 @@ import {catchError, filter, map} from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Area, Section, MeasurementType, Measurement } from 'src/app/shared/models';
 import {environment} from '../../../environments/environment';
-import {error} from 'util';
 
 const url = `${environment.vmUrl}:${environment.vmPort}${environment.corePathPrefix}`;
 

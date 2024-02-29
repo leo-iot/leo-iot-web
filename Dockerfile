@@ -1,11 +1,11 @@
 ##STAGE 0, building sources
-FROM --platform=linux/amd64 node:dubnium as build-stage
+FROM node:18 as build-stage
 
 #setting workdir
 WORKDIR /app
 
 #Copying package.json and lock file
-COPY . .
+COPY package*.json ./
 
 #Installing Dependecies
 RUN npm install
@@ -14,7 +14,7 @@ RUN npm install
 COPY . ./
 
 #building the sources
-RUN npm run build --prod
+RUN npm run build-i18n
 
 ##STAGE 1, serving production build (exposing default port 80)
 FROM nginx:stable-alpine

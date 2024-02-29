@@ -1,9 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
     "outDir": "../out-tsc/app",
-    "types": []
+    "types": [
+      "@angular/localize"
+    ]
   },
   "exclude": [
     "test.ts",

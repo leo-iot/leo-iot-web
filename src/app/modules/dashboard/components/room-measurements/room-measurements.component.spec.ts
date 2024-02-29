@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RoomMeasurementsComponent } from './room-measurements.component';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
@@ -28,7 +28,7 @@ describe('RoomMeasurementsComponent', () => {
   let component: RoomMeasurementsComponent;
   let fixture: ComponentFixture<RoomMeasurementsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RoomMeasurementsComponent],
       imports: [MaterialModule, MqttModule.forRoot(MQTT_SERVICE_OPTIONS)],

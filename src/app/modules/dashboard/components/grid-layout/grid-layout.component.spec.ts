@@ -5,7 +5,7 @@ import { FloorSwitchComponent } from '../floor-switch/floor-switch.component';
 import { HistoricalMeasurementService } from '../../../../core/services/historical-measurements.service';
 import { HistoricRoomDataComponent } from '../historic-room-data/historic-room-data.component';
 import { SvgViewerComponent } from '../svg-viewer/svg-viewer.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GridLayoutComponent } from './grid-layout.component';
 import { RoomMeasurementsComponent } from '../room-measurements/room-measurements.component';
@@ -38,7 +38,7 @@ describe('GridLayoutComponent', () => {
   let component: GridLayoutComponent;
   let fixture: ComponentFixture<GridLayoutComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         GridLayoutComponent,

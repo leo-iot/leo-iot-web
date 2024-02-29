@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, EventEmitter, OnChanges, SimpleChanges, Input, Output } from '@angular/core';
-import { MatRipple } from '@angular/material';
+import { MatRipple } from '@angular/material/core';
 import { Observable, of } from 'rxjs';
 
 import { AutoplayService } from 'src/app/core/services/autoplay.service';

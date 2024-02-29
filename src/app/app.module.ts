@@ -10,7 +10,7 @@ import {NavigationModule} from './modules/navigation/navigation.module';
 import {School3dComponent} from './3d/school3d/school3d.component';
 import {ModelmenuComponent} from './3d/school3d/modelmenu/modelmenu.component';
 import {VideoFeedComponent} from './3d/video-feed/video-feed.component';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material';
     NavigationModule,
     MatButtonModule,
   ],
+  exports: [MatButtonModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {

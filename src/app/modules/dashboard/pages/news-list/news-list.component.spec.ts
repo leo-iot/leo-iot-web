@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NewsListComponent } from './news-list.component';
 import { NewsComponent } from '../news/news.component';
@@ -9,7 +9,7 @@ describe('NewsListComponent', () => {
   let component: NewsListComponent;
   let fixture: ComponentFixture<NewsListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NewsListComponent, NewsComponent ],
       imports: [HttpClientModule],

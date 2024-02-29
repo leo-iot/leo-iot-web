@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FooterTextComponent } from './footer-text.component';
 
@@ -6,7 +6,7 @@ describe('FooterTextComponent', () => {
   let component: FooterTextComponent;
   let fixture: ComponentFixture<FooterTextComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FooterTextComponent ]
     })

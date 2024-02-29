@@ -20,10 +20,10 @@
  *    "Font Awesome by Dave Gandy - http://fontawesome.io"
  */
 
-@import 'weather-icons-core';
-@import 'weather-icons-variables';
-@import 'weather-icons-classes';
-@import 'weather-icons-wind';
+@import './weather-icons-core';
+@import './weather-icons-variables';
+@import './weather-icons-classes';
+@import './weather-icons-wind';
 // Mappings to various APIs
 @import "src/assets/weather-icons/mappings/wi-yahoo";
 @import "src/assets/weather-icons/mappings/wi-forecast-io";
